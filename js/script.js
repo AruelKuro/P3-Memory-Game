@@ -1,6 +1,13 @@
-/*
- * Create a list that holds all of your cards
- */
+//List that holds all cards
+const card = document.getElementsByClassName('card');
+let cards = [...card];
+const gameBoard = document.querySelector(".deck");
+
+// Other variables
+let stars = document.getElementsByClassName('fa-star');
+let move = document.getElementsByClassName('moves');
+let cardsOpened = [];
+let moves = 0;
 
 
 /*
@@ -9,6 +16,9 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -26,6 +36,69 @@ function shuffle(array) {
 }
 
 
+function startGame() {
+    cardsOpened = [];
+    let shuffleCards = shuffle(cards);
+    for (let i = 0; i < shuffleCards.length; i++) {
+        gameBoard.append(shuffleCards[i]);
+        cards[i].classList.remove('open', 'show', 'match');
+        cards[i].addEventListener('click', cardOpened);
+        cards[i].addEventListener('click', cardClicked);
+    }
+}
+
+function cardClicked() {
+    cardsOpened.push(this);
+    let len = cardsOpened.length;
+    if(len === 2) {
+        moveCount();
+        if (cardsOpened[0].type === cardsOpened[1].type) {
+            cardMatched();
+        } else {
+            cardUnmatched();
+        }
+    }
+}
+//Create open card function
+function cardOpened() {
+    this.classList.toggle('open');
+    this.classList.toggle('show');
+}
+
+//Create matched card function
+function cardMatched() {
+
+}
+
+//Create unmatched card function
+function cardUnmatched() {
+
+}
+
+//Create move counter function
+function moveCount() {
+    moves++;
+}
+
+//Create function for winning
+function win() {
+
+}
+
+//Create function for starting timer
+function timerStart() {
+
+}
+
+//Create function for stoppping timer
+function timerStop() {
+
+}
+
+//Create function for resetting timer for new game
+function timerReset() {
+
+}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -36,3 +109,4 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+document.addEventListener('DOMContentLoaded', startGame());
