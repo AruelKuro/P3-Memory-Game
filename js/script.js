@@ -1,5 +1,5 @@
 //List that holds all cards
-const card = document.getElementsByClassName('card');
+let card = document.getElementsByClassName('card');
 let cards = [...card];
 const gameBoard = document.querySelector(".deck");
 
@@ -8,7 +8,7 @@ let stars = document.getElementsByClassName('fa-star');
 let move = document.getElementsByClassName('moves');
 let cardsOpened = [];
 let moves = 0;
-
+let matchedCards = document.getElementsByClassName('match');
 
 /*
  * Display the cards on the page
@@ -53,9 +53,9 @@ function cardClicked() {
     if(len === 2) {
         moveCount();
         if (cardsOpened[0].type === cardsOpened[1].type) {
-            cardMatched();
+            matched();
         } else {
-            cardUnmatched();
+            notMatched();
         }
     }
 }
@@ -66,13 +66,40 @@ function cardOpened() {
 }
 
 //Create matched card function
-function cardMatched() {
-
+function matched() {
+	cardsOpened[0].classList.add('match');
+	cardsOpened[1].classList.add('match');
+	cardsOpened[0].classList.remove('open', 'show');
+	cardsOpened[1].classList.remove('open', 'show');
+	cardsOpened = [];
 }
 
 //Create unmatched card function
-function cardUnmatched() {
+function notMatched() {
+	cardsOpened[0].classList.add('notmatch');
+	cardsOpened[1].classList.add('notmatch');
+	disable();
+	setTimeout(function() {
+		cardsOpened[0].classList.remove('open', 'show', 'notmatch');
+		cardsOpened[1].classList.remove('open', 'show', 'notmatch');
+		enable();
+		cardsOpened = [];
+	}, 700);
+}
 
+function disable() {
+	Array.prototype.filter.call(cards, function(card) {
+		card.classList.add('disabled');
+	});
+}
+
+function enable() {
+	Array.prototype.filter.call(cards, function(card) {
+		card.classList.remove('disabled');
+		for (var i = 0; i < matchedCards.length; i++) {
+			matchedCards[i].classList.add('disabled');
+		}
+	});
 }
 
 //Create move counter function
