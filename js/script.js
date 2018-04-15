@@ -5,10 +5,12 @@ const gameBoard = document.querySelector(".deck");
 
 // Other variables
 let stars = document.getElementsByClassName('fa-star');
-let move = document.getElementsByClassName('moves');
+let count = document.querySelector('.moves');
 let cardsOpened = [];
 let moves = 0;
 let matchedCards = document.getElementsByClassName('match');
+let showTime = document.querySelector('.show-timer');
+let timeCount
 
 /*
  * Display the cards on the page
@@ -38,6 +40,9 @@ function shuffle(array) {
 
 function startGame() {
     cardsOpened = [];
+    count.innerHTML = 0;
+    moves = 0;
+    clearInterval(timeCount);
     let shuffleCards = shuffle(cards);
     for (let i = 0; i < shuffleCards.length; i++) {
         gameBoard.append(shuffleCards[i]);
@@ -104,8 +109,15 @@ function enable() {
 
 //Create move counter function
 function moveCount() {
-    moves++;
+    moves+=1;
+    count.innerHTML = moves;
+    if (moves >=10 && moves <20) {
+    	stars[0].classList.add('decrease');
+    } else if (moves >= 20) {
+    	stars[1].classList.add('decrease');
+    }
 }
+
 
 //Create function for winning
 function win() {
