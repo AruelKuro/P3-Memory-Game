@@ -10,8 +10,11 @@ let cardsOpened = [];
 let moves = 0;
 let matchedCards = document.getElementsByClassName('match');
 let showTime = document.querySelector('.show-timer');
-let timeCount
-
+let restart = document.querySelector('.fa-repeat');
+var timeCount;
+var second = 0;
+var minute = 0;
+var hour = 0;
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -42,7 +45,6 @@ function startGame() {
     cardsOpened = [];
     count.innerHTML = 0;
     moves = 0;
-    clearInterval(timeCount);
     let shuffleCards = shuffle(cards);
     for (let i = 0; i < shuffleCards.length; i++) {
         gameBoard.append(shuffleCards[i]);
@@ -50,6 +52,12 @@ function startGame() {
         cards[i].addEventListener('click', cardOpened);
         cards[i].addEventListener('click', cardClicked);
     }
+    second = 0;
+    minute = 0;
+    hour = 0;
+    var showTime = document.querySelector('.show-timer');
+    showTime.innerHTML = "0 mins 0 secs";
+    clearInterval(timeCount);
 }
 
 function cardClicked() {
@@ -116,6 +124,9 @@ function moveCount() {
     } else if (moves >= 20) {
     	stars[1].classList.add('decrease');
     }
+    if (moves == 1) {
+    	timerStart();
+    }
 }
 
 
@@ -126,18 +137,23 @@ function win() {
 
 //Create function for starting timer
 function timerStart() {
+	timeCount = setInterval(function() {
+		showTime.innerHTML = minute +"mins" + second +"secs";
+		second+=1;
+		if (second == 60) {
+			minute+=1;
+			second = 0;
+		} else if (minute == 60) {
+			hour+=1;
+			minute = 0;
+		}
+	}, 1000);
 
 }
 
-//Create function for stoppping timer
-function timerStop() {
-
-}
 
 //Create function for resetting timer for new game
-function timerReset() {
 
-}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -148,4 +164,6 @@ function timerReset() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
 document.addEventListener('DOMContentLoaded', startGame());
+restart.onclick = startGame;
