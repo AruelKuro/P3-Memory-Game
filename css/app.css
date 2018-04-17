@@ -125,3 +125,48 @@ h1 {
     float: right;
     cursor: pointer;
 }
+/*
+* Modal
+*/
+
+.win {
+    position: fixed;
+    visibility: hidden;
+    background: rgb(0,0,200,0.7);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+}
+
+
+
+.message {
+    padding: 20px;
+    margin: 80px auto;
+    border-radius: 10px;
+    position: relative;
+    background-color: #ffffff;
+    text-align: center;
+    width: 70%;
+    opacity: 1;
+}
+
+
+.show {
+    visibility: visible;
+    opacity: 100;
+
+}
+#play-again {
+    position: relative;
+    visibility: visible;
+    background-color: white;
+    border-radius: 5px;
+    margin: 10px auto;
+    padding: 10px;
+    width: 50%;
+    justify-content: center;
+    font-size: 30px;
+}

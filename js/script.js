@@ -14,14 +14,9 @@ let restart = document.querySelector('.fa-repeat');
 var timeCount;
 var second = 0;
 var minute = 0;
-var hour = 0;
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
+let modal = document.getElementById('win-message');
+let closeModal = document.querySelector('.close');
+let playAgain = document.getElementById('play-again');
 
 
 
@@ -40,7 +35,7 @@ function shuffle(array) {
     return array;
 }
 
-
+//Function that starts the game
 function startGame() {
     cardsOpened = [];
     count.innerHTML = 0;
@@ -51,6 +46,7 @@ function startGame() {
         cards[i].classList.remove('open', 'show', 'match');
         cards[i].addEventListener('click', cardOpened);
         cards[i].addEventListener('click', cardClicked);
+        cards[i].addEventListener('click', win);
     }
     second = 0;
     minute = 0;
@@ -58,7 +54,10 @@ function startGame() {
     var showTime = document.querySelector('.show-timer');
     showTime.innerHTML = "0 mins 0 secs";
     clearInterval(timeCount);
+    stars[0].classList.remove('decrease');
+    stars[1].classList.remove('decrease');
 }
+
 
 function cardClicked() {
     cardsOpened.push(this);
@@ -72,13 +71,13 @@ function cardClicked() {
         }
     }
 }
-//Create open card function
+// Function to show opened card
 function cardOpened() {
     this.classList.toggle('open');
     this.classList.toggle('show');
 }
 
-//Create matched card function
+// Function for a cards that matches
 function matched() {
 	cardsOpened[0].classList.add('match');
 	cardsOpened[1].classList.add('match');
@@ -87,7 +86,7 @@ function matched() {
 	cardsOpened = [];
 }
 
-//Create unmatched card function
+// Function for cards that do not match
 function notMatched() {
 	cardsOpened[0].classList.add('notmatch');
 	cardsOpened[1].classList.add('notmatch');
@@ -115,7 +114,7 @@ function enable() {
 	});
 }
 
-//Create move counter function
+// Function for counting moves and controlling star rating
 function moveCount() {
     moves+=1;
     count.innerHTML = moves;
@@ -132,19 +131,26 @@ function moveCount() {
 
 //Create function for winning
 function win() {
-
+	if (matchedCards.length === 16) {
+		clearInterval(timeCount);
+		finalTime = showTime.innerHTML;
+		modal.style.display = "block";
+		starRate = stars.innerHTML;
+		document.querySelector('.msg-moves').innerHTML = moves;
+		document.querySelector('.msg-time').innerHTML = finalTime;
+		document.querySelector('.msg-rating').innerHTML = starRate;
+	}
 }
 
-//Create function for starting timer
+// Function for the timer
 function timerStart() {
 	timeCount = setInterval(function() {
-		showTime.innerHTML = minute +"mins" + second +"secs";
+		showTime.innerHTML = minute + " mins " + second + " secs";
 		second+=1;
 		if (second == 60) {
 			minute+=1;
 			second = 0;
 		} else if (minute == 60) {
-			hour+=1;
 			minute = 0;
 		}
 	}, 1000);
@@ -152,18 +158,10 @@ function timerStart() {
 }
 
 
-//Create function for resetting timer for new game
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
+// Event listener for starting the game
 document.addEventListener('DOMContentLoaded', startGame());
+
+// Restart button activates startGame function
 restart.onclick = startGame;
+playAgain.onclick = startGame;
