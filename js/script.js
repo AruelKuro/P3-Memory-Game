@@ -19,7 +19,6 @@ let closeModal = document.querySelector('.close');
 let playAgain = document.getElementById('play-again');
 
 
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -57,6 +56,7 @@ function startGame() {
     stars[0].classList.remove('decrease');
     stars[1].classList.remove('decrease');
 }
+
 
 
 function cardClicked() {
@@ -160,8 +160,8 @@ function timerStart() {
 
 
 // Event listener for starting the game
-document.addEventListener('DOMContentLoaded', startGame());
 
+document.addEventListener('DOMContentLoaded', startGame());
 // Restart button activates startGame function
 restart.onclick = startGame;
 playAgain.onclick = startGame;
