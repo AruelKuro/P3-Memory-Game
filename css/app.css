@@ -122,13 +122,18 @@ h1 {
 }
 
 .stars .decrease {
-    color: #d9d9d9;
+    visibility: collapse;
 }
 
 .score-panel .restart {
     float: right;
     cursor: pointer;
 }
+
+#msgRating li {
+    display: inline-block;
+}
+
 /*
 * Modal
 */
@@ -136,7 +141,7 @@ h1 {
 .win {
     position: fixed;
     visibility: hidden;
-    background: rgb(0,0,200,0.7);
+    background: rgb(255, 255, 204, 0.7);
     top: 0;
     bottom: 0;
     left: 0;
@@ -164,7 +169,7 @@ h1 {
 }
 #play-again {
     position: relative;
-    background-color: white;
+    background: #ffff66;
     border-radius: 5px;
     margin: 10px auto;
     padding: 10px;

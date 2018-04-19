@@ -4,7 +4,7 @@ let cards = [...card];
 const gameBoard = document.querySelector(".deck");
 
 // Other variables
-let stars = document.getElementsByClassName('fa-star');
+const stars = document.querySelectorAll('.fa-star');
 let count = document.querySelector('.moves');
 let cardsOpened = [];
 let moves = 0;
@@ -17,6 +17,7 @@ var minute = 0;
 let modal = document.getElementById('win-message');
 let closeModal = document.querySelector('.close');
 let playAgain = document.getElementById('play-again');
+
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -43,6 +44,7 @@ function startGame() {
     for (let i = 0; i < shuffleCards.length; i++) {
         gameBoard.append(shuffleCards[i]);
         cards[i].classList.remove('open', 'show', 'match');
+        modal.classList.remove('show');
         cards[i].addEventListener('click', cardOpened);
         cards[i].addEventListener('click', cardClicked);
         cards[i].addEventListener('click', win);
@@ -53,12 +55,13 @@ function startGame() {
     var showTime = document.querySelector('.show-timer');
     showTime.innerHTML = "0 mins 0 secs";
     clearInterval(timeCount);
-    stars[0].classList.remove('decrease');
-    stars[1].classList.remove('decrease');
+    for (var i= 0; i < stars.length; i++){
+    	stars[i].classList.remove('decrease');
+    }
 }
 
 
-
+//Function to check up if cards matches or not
 function cardClicked() {
     cardsOpened.push(this);
     let len = cardsOpened.length;
@@ -99,12 +102,14 @@ function notMatched() {
 	}, 700);
 }
 
+//Temporary disabling cards
 function disable() {
 	Array.prototype.filter.call(cards, function(card) {
 		card.classList.add('disabled');
 	});
 }
 
+//Enabling cards again
 function enable() {
 	Array.prototype.filter.call(cards, function(card) {
 		card.classList.remove('disabled');
@@ -119,9 +124,17 @@ function moveCount() {
     moves+=1;
     count.innerHTML = moves;
     if (moves >=10 && moves <20) {
-    	stars[0].classList.add('decrease');
+    	for( i= 0; i < 3; i++){
+            if(i > 1){
+                stars[i].classList.add('decrease');
+            }
+        }
     } else if (moves >= 20) {
-    	stars[1].classList.add('decrease');
+    	for( i= 0; i < 3; i++){
+            if(i > 0){
+                stars[i].classList.add('decrease');
+            }
+        }
     }
     if (moves == 1) {
     	timerStart();
@@ -131,16 +144,18 @@ function moveCount() {
 
 //Create function for winning
 function win() {
-	if (matchedCards.length === 16) {
+	if (matchedCards.length == 16) {
 		clearInterval(timeCount);
+		modal.classList.add('show');
 		finalTime = showTime.innerHTML;
-		modal.style.display = "block";
-		starRate = stars.innerHTML;
-		document.querySelector('.msg-moves').innerHTML = moves;
-		document.querySelector('.msg-time').innerHTML = finalTime;
-		document.querySelector('.msg-rating').innerHTML = starRate;
+		var starRate = document.querySelector(".stars").innerHTML;
+		document.getElementById("msgMoves").innerHTML = moves;
+		document.getElementById("msgTime").innerHTML = finalTime;
+		document.getElementById("msgRating").innerHTML = starRate;
 	}
 }
+
+
 
 // Function for the timer
 function timerStart() {
@@ -157,11 +172,9 @@ function timerStart() {
 
 }
 
-
-
 // Event listener for starting the game
-
 document.addEventListener('DOMContentLoaded', startGame());
+
 // Restart button activates startGame function
 restart.onclick = startGame;
 playAgain.onclick = startGame;
