@@ -1,20 +1,17 @@
-# Memory Game Project
+# Memory Game
+Project 3 in Udacity Nanodegree program.
 
-## Table of Contents
+## How to play
+Download or clone this repository and open `index.html` in your browser.
+Click on random cards trying to find a match.
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+##Game logic
+Cards are randomly shuffled when game starts.
+If card match is found cards stays opened if not then closes back again.
+Moves increments with every pair.
+Timer starts after first move.
+When all cards are opened, game is finished and modal with results shows up.
 
-## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
 
-To get started, open `js/app.js` and start building out the app's functionality
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
