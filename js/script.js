@@ -15,8 +15,6 @@ var timeCount;
 var second = 0;
 var minute = 0;
 let modal = document.getElementById('win-message');
-let closeModal = document.querySelector('.close');
-let playAgain = document.getElementById('play-again');
 
 
 
@@ -43,8 +41,7 @@ function startGame() {
     let shuffleCards = shuffle(cards);
     for (let i = 0; i < shuffleCards.length; i++) {
         gameBoard.append(shuffleCards[i]);
-        cards[i].classList.remove('open', 'show', 'match');
-        modal.classList.remove('show');
+        cards[i].classList.remove('open', 'show', 'match', 'disabled');
         cards[i].addEventListener('click', cardOpened);
         cards[i].addEventListener('click', cardClicked);
         cards[i].addEventListener('click', win);
@@ -56,7 +53,7 @@ function startGame() {
     showTime.innerHTML = "0 mins 0 secs";
     clearInterval(timeCount);
     for (var i= 0; i < stars.length; i++){
-    	stars[i].classList.remove('decrease');
+    	stars[i].style.visibility = "visible";
     }
 }
 
@@ -78,6 +75,7 @@ function cardClicked() {
 function cardOpened() {
     this.classList.toggle('open');
     this.classList.toggle('show');
+    this.classList.toggle('disabled');
 }
 
 // Function for a cards that matches
@@ -126,13 +124,13 @@ function moveCount() {
     if (moves >=10 && moves <20) {
     	for( i= 0; i < 3; i++){
             if(i > 1){
-                stars[i].classList.add('decrease');
+                stars[i].style.visibility = "collapse";
             }
         }
     } else if (moves >= 20) {
     	for( i= 0; i < 3; i++){
             if(i > 0){
-                stars[i].classList.add('decrease');
+                stars[i].style.visibility = "collapse";
             }
         }
     }
@@ -148,7 +146,7 @@ function win() {
 		clearInterval(timeCount);
 		modal.classList.add('show');
 		finalTime = showTime.innerHTML;
-		var starRate = document.querySelector(".stars").innerHTML;
+		var starRate = document.querySelector('.stars').innerHTML;
 		document.getElementById("msgMoves").innerHTML = moves;
 		document.getElementById("msgTime").innerHTML = finalTime;
 		document.getElementById("msgRating").innerHTML = starRate;
@@ -172,9 +170,15 @@ function timerStart() {
 
 }
 
+//Function for closing modal and restarting the game
+function playAgain () {
+	modal.classList.remove('show');
+	startGame();
+}
+
 // Event listener for starting the game
 document.addEventListener('DOMContentLoaded', startGame());
 
 // Restart button activates startGame function
 restart.onclick = startGame;
-playAgain.onclick = startGame;
+
