@@ -11,3 +11,6 @@ Click on random cards trying to find a match.
 - Moves increments with every pair.
 - Timer starts after first move.
 - When all cards are opened, game is finished and modal with results shows up.
+
+## Reference
+Starter code was provided by Udacity: `https://github.com/udacity/fend-project-memory-game`
